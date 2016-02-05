@@ -17,6 +17,7 @@ public class Student {
 
     private int studentID;
     private String firstName;
+    private String middleName;
     private String lastName;
     private String birthDate;
     private String gender;
@@ -37,7 +38,13 @@ public class Student {
 
     }
 
-    ;
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
     public int getImageID() {
         return imageID;
@@ -176,10 +183,11 @@ public class Student {
         this.guard2ID = guard2ID;
     }
 
-    public Student(String firstName, String lastName, String grade, String gender,String nationality, int imageID, String birthDate, String fathersName, int fPhone,
+    public Student(String firstName,String middleName, String lastName, String grade, String gender,String nationality, int imageID, String birthDate, String fathersName, int fPhone,
             String mothersName, int mPhone, String poBox, String resAddr, String dateEnrolled, int guard1ID, int guard2ID) {
 
         this.firstName = firstName;
+        this.middleName = middleName;
         this.lastName = lastName;
         this.grade = grade;
         this.gender = gender;

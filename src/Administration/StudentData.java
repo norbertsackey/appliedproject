@@ -53,6 +53,7 @@ public class StudentData {
     //this method adds a Taxi to the database
     public void addStudent(Student neo) {
         String firstName = neo.getFirstName();
+        String middleName = neo.getMiddleName();
         String lastName = neo.getLastName();
         String grade = neo.getGrade();
         String gender = neo.getGender();
@@ -70,7 +71,7 @@ public class StudentData {
         int guard2ID = neo.getGuard2ID();
 
         try {
-            String stm = "INSERT INTO students(firstname,lastname,grade,gender,imageID,birthDate,fathersname,fphone,mothersname,mphone,pobox,resAddr,dateEnrolled,guard1ID,guard2ID,nationality)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String stm = "INSERT INTO students(firstname,lastname,grade,gender,imageID,birthDate,fathersname,fphone,mothersname,mphone,pobox,resAddr,dateEnrolled,guard1ID,guard2ID,nationality,middlename)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             p = conn.prepareStatement(stm);
             p.setString(1, firstName);
             p.setString(2, lastName);
@@ -88,6 +89,7 @@ public class StudentData {
             p.setInt(14, guard1ID);
             p.setInt(15, guard2ID);
             p.setString(16, nationality);
+            p.setString(16, middleName);
             p.executeUpdate();
 
             System.out.println("New Student Added");
@@ -100,6 +102,7 @@ public class StudentData {
     //this method updates a Taxi in the database
     public void updateStudent(Student neo, int id) {
         String firstName = neo.getFirstName();
+        String middleName = neo.getMiddleName();
         String lastName = neo.getLastName();
         String grade = neo.getGrade();
         String gender = neo.getGender();
@@ -116,7 +119,7 @@ public class StudentData {
         int guard1ID = neo.getGuard1ID();
         int guard2ID = neo.getGuard2ID();
         try {
-            String stm = "update students set firstname = ?,lastname = ?,grade = ?,gender = ?,imageID = ?,birthDate = ?,fathersname =?,fphone = ?,mothersname = ?,mphone = ?,pobox,resAddr = ?,dateEnrolled = ?,guard1ID = ?,guard2ID =?,nationality=? where studentID=?";
+            String stm = "update students set firstname = ?,lastname = ?,grade = ?,gender = ?,imageID = ?,birthDate = ?,fathersname =?,fphone = ?,mothersname = ?,mphone = ?,pobox,resAddr = ?,dateEnrolled = ?,guard1ID = ?,guard2ID =?,nationality=?,middlename=? where studentID=?";
             p = conn.prepareStatement(stm);
             p.setString(1, firstName);
             p.setString(2, lastName);
@@ -133,7 +136,8 @@ public class StudentData {
             p.setString(13, dateEnrolled);
             p.setInt(14, guard1ID);
             p.setInt(15, guard2ID);
-            p.setString(16, dateEnrolled);
+            p.setString(16, nationality);
+            p.setString(16, middleName);
             p.setInt(17, id);
             p.executeUpdate();
             System.out.println("Student Data Updated");
@@ -165,19 +169,40 @@ public class StudentData {
             if (u.next()) {
                 array.add(Integer.toString(u.getInt("studentID")));
                 array.add(u.getString("firstname"));
+                array.add(u.getString("middleName"));
+                array.add(u.getString("lastName"));
                 array.add(u.getString("grade"));
                 array.add(u.getString("gender"));
                 array.add(u.getString("imageID"));
                 array.add(u.getString("birthDate"));
-                array.add(u.getString("fathersName"));
-                array.add(Integer.toString(u.getInt("fPhone")));
-                array.add(u.getString("mothersName"));
-                array.add(Integer.toString(u.getInt("mPhone")));
-                array.add(u.getString("poBox"));
-                array.add(u.getString("resAddr"));
-                array.add(u.getString("dateEnrolled"));
-                array.add(Integer.toString(u.getInt("guard1ID")));
-                array.add(Integer.toString(u.getInt("guard2ID")));
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No student with that ID number exist!");
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            System.exit(0);
+        }
+        return array;
+    }
+
+    public ArrayList<String> getSearchbyName(String studentName) {
+        ResultSet u = null;
+        ArrayList<String> array = new ArrayList<>();
+
+        try {
+            Statement s = conn.createStatement();
+            String query = "SELECT * FROM students WHERE studentID = '" + studentName + "'";
+            u = s.executeQuery(query);
+            if (u.next()) {
+                array.add(Integer.toString(u.getInt("studentID")));
+                array.add(u.getString("firstname"));
+                array.add(u.getString("middleName"));
+                array.add(u.getString("lastName"));
+                array.add(u.getString("grade"));
+                array.add(u.getString("gender"));
+                array.add(u.getString("imageID"));
+                array.add(u.getString("birthDate"));
 
             } else {
                 JOptionPane.showMessageDialog(null, "No student with that ID number exist!");
@@ -190,6 +215,7 @@ public class StudentData {
     }
 
     //This method stores all the needed info about all taxi in a text file
+
     public ResultSet saveToFile() {
         ResultSet u = null;
         ResultSet x = null;
