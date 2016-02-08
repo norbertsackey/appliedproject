@@ -5,6 +5,7 @@
  */
 package Login;
 
+import Administration.HomePage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -61,6 +62,8 @@ public class LoginPage extends javax.swing.JFrame {
                     login = true;
                 }
                 System.out.println( dbUsername + " " + dbPassword + ":" + "Login successful");
+                HomePage x =  new HomePage();
+                x.setVisible(true);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,6 +91,8 @@ public class LoginPage extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(0, 153, 204));
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel3.setText("username");
