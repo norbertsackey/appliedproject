@@ -104,6 +104,7 @@ public class LoginPage extends javax.swing.JFrame {
         jPanel1.add(jLabel4);
         jLabel4.setBounds(40, 10, 120, 20);
 
+        jButton2.setBackground(new java.awt.Color(230, 126, 34));
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton2.setText("Cancel");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +115,7 @@ public class LoginPage extends javax.swing.JFrame {
         jPanel1.add(jButton2);
         jButton2.setBounds(390, 250, 69, 30);
 
+        jButton1.setBackground(new java.awt.Color(230, 126, 34));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton1.setText("Login");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +156,7 @@ public class LoginPage extends javax.swing.JFrame {
         jPanel1.add(jTextField3);
         jTextField3.setBounds(270, 130, 160, 30);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Login/Key Filled-500.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Login/Key Filled-500a.png"))); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 500, 300);
 
