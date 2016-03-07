@@ -14,6 +14,7 @@ package Administration;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 import java.util.*;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -58,7 +59,6 @@ public class StudentData {
         String grade = neo.getGrade();
         String gender = neo.getGender();
         String nationality = neo.getNationality();
-        int imageID = neo.getImageID();
         String birthDate = neo.getBirthDate();
         String fathersName = neo.getFathersName();
         int fPhone = neo.getfPhone();
@@ -71,28 +71,54 @@ public class StudentData {
         int guard2ID = neo.getGuard2ID();
 
         try {
-            String stm = "INSERT INTO students(firstname,lastname,grade,gender,imageID,birthDate,fathersname,fphone,mothersname,mphone,pobox,resAddr,dateEnrolled,guard1ID,guard2ID,nationality,middlename)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String stm = "INSERT INTO students(firstname,lastname,grade,gender,birthDate,fathersname,fphone,mothersname,mphone,pobox,resAddr,dateEnrolled,guard1ID,guard2ID,nationality,middlename)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             p = conn.prepareStatement(stm);
             p.setString(1, firstName);
             p.setString(2, lastName);
             p.setString(3, grade);
             p.setString(4, gender);
-            p.setInt(5, imageID);
-            p.setString(6, birthDate);
-            p.setString(7, fathersName);
-            p.setInt(8, fPhone);
-            p.setString(9, mothersName);
-            p.setInt(10, mPhone);
-            p.setString(11, poBox);
-            p.setString(12, resAddr);
-            p.setString(13, dateEnrolled);
-            p.setInt(14, guard1ID);
-            p.setInt(15, guard2ID);
-            p.setString(16, nationality);
+            p.setString(5, birthDate);
+            p.setString(6, fathersName);
+            p.setInt(7, fPhone);
+            p.setString(8, mothersName);
+            p.setInt(9, mPhone);
+            p.setString(10, poBox);
+            p.setString(11, resAddr);
+            p.setString(12, dateEnrolled);
+            p.setInt(13, guard1ID);
+            p.setInt(14, guard2ID);
+            p.setString(15, nationality);
             p.setString(16, middleName);
             p.executeUpdate();
 
             System.out.println("New Student Added");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    public void addImage(File newImage, String path,String ptable) {
+        PreparedStatement st = null;
+        ResultSet r = null;
+        int id= 0;
+        String query = "SELECT MAX(studentID) FROM "+ptable+"";
+        try {
+            String stm = "INSERT INTO images(source,personID,category)VALUES(?,?,?)";
+            st = conn.prepareStatement(query);
+            r = st.executeQuery();
+          if(r.next()){
+           id = r.getInt(1);
+           System.out.println(id);
+          }
+            int pid = id + 1;
+            p = conn.prepareStatement(stm);
+            p.setString(1, path);
+            p.setInt(2, pid);
+            p.setString(3, ptable);
+            p.executeUpdate();
+
+            System.out.println("New Image Added");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,7 +133,6 @@ public class StudentData {
         String grade = neo.getGrade();
         String gender = neo.getGender();
         String nationality = neo.getNationality();
-        int imageID = neo.getImageID();
         String birthDate = neo.getBirthDate();
         String fathersName = neo.getFathersName();
         int fPhone = neo.getfPhone();
@@ -119,13 +144,12 @@ public class StudentData {
         int guard1ID = neo.getGuard1ID();
         int guard2ID = neo.getGuard2ID();
         try {
-            String stm = "update students set firstname = ?,lastname = ?,grade = ?,gender = ?,imageID = ?,birthDate = ?,fathersname =?,fphone = ?,mothersname = ?,mphone = ?,pobox,resAddr = ?,dateEnrolled = ?,guard1ID = ?,guard2ID =?,nationality=?,middlename=? where studentID=?";
+            String stm = "update students set firstname = ?,lastname = ?,grade = ?,gender = ?,birthDate = ?,fathersname =?,fphone = ?,mothersname = ?,mphone = ?,pobox,resAddr = ?,dateEnrolled = ?,guard1ID = ?,guard2ID =?,nationality=?,middlename=? where studentID=?";
             p = conn.prepareStatement(stm);
             p.setString(1, firstName);
             p.setString(2, lastName);
             p.setString(3, grade);
             p.setString(4, gender);
-            p.setInt(5, imageID);
             p.setString(6, birthDate);
             p.setString(7, fathersName);
             p.setInt(8, fPhone);
