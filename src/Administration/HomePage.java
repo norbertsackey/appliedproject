@@ -5,15 +5,13 @@
  */
 package Administration;
 
-import java.io.File;
-import java.io.PrintWriter;
+import Login.LoginPage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,6 +49,15 @@ public class HomePage extends javax.swing.JFrame {
 
         }
     
+        jButton1.setToolTipText("Add New Staff");
+        jButton2.setToolTipText("Add New Student");
+        jButton3.setToolTipText("Reload Table");
+        jButton4.setToolTipText("Add New Teacher");
+        jButton5.setToolTipText("Search");
+        jButton6.setToolTipText("New SMS Message");
+        jButton7.setToolTipText("Delete");
+        jButton8.setToolTipText("Edit");
+        jButton9.setToolTipText("Export");
     }
 
     /**
@@ -80,11 +87,15 @@ public class HomePage extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 33, 55));
 
-        jPanel1.setBackground(new java.awt.Color(39, 174, 96));
+        jPanel1.setBackground(new java.awt.Color(94, 176, 153));
         jPanel1.setForeground(new java.awt.Color(102, 102, 102));
         jPanel1.setToolTipText("");
 
@@ -110,7 +121,7 @@ public class HomePage extends javax.swing.JFrame {
 
         jButton4.setBackground(new java.awt.Color(230, 126, 34));
         jButton4.setForeground(new java.awt.Color(255, 0, 0));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administration/Singing Teacher-48.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administration/Classroom-82.png"))); // NOI18N
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -122,12 +133,25 @@ public class HomePage extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
 
-        jButton5.setBackground(new java.awt.Color(255, 255, 255));
+        jButton5.setBackground(new java.awt.Color(236, 162, 95));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administration/glyphicons-28-search.png"))); // NOI18N
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
+            }
+        });
+        jButton5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jButton5KeyTyped(evt);
             }
         });
 
@@ -136,7 +160,7 @@ public class HomePage extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Lucida Bright", 0, 24)); // NOI18N
         jLabel4.setText("GIS AdminSys ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "applications", "servers" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "students", "staff", "messages", "expenses", "revenues" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -163,7 +187,7 @@ public class HomePage extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(230, 126, 34));
         jButton3.setForeground(new java.awt.Color(255, 0, 0));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administration/Synchronize-48.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administration/arrows.png"))); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -173,13 +197,13 @@ public class HomePage extends javax.swing.JFrame {
         jTable1.setModel(jade);
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administration/glyphicons-4-user.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administration/glyphicons-4-usera.png"))); // NOI18N
 
         jLabel2.setText("Admin1 ");
 
         jButton8.setBackground(new java.awt.Color(230, 126, 34));
         jButton8.setForeground(new java.awt.Color(255, 0, 0));
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administration/Edit File-481.png"))); // NOI18N
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administration/Edit File-48.png"))); // NOI18N
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -195,85 +219,130 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
+        jButton11.setBackground(new java.awt.Color(236, 162, 95));
+        jButton11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton11.setText("Administration");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        jButton12.setBackground(new java.awt.Color(236, 162, 95));
+        jButton12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton12.setText("Messaging");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        jButton13.setBackground(new java.awt.Color(236, 162, 95));
+        jButton13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton13.setText("Accounting");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setBackground(new java.awt.Color(236, 162, 95));
+        jButton10.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButton10.setText("Log out");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, 0, 153, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
-                .addGap(10, 10, 10)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(216, 216, 216))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 868, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton11)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton13)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton12)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addGap(89, 89, 89))))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(jButton10))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(56, 56, 56)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 12, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(511, 511, 511)
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton10)))))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel4)))
-                        .addGap(29, 29, 29)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(58, Short.MAX_VALUE))
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1))))
+                .addGap(53, 53, 53))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -305,7 +374,7 @@ public class HomePage extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-
+       RemoveSelectedData(jTable1);
       
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -340,25 +409,267 @@ public class HomePage extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        String category = (jComboBox1.getSelectedItem().toString()).trim();
+        ResultSet u;
+        String q1 = null;
+        try {
+            java.sql.Statement s = con.createStatement();
+            if (category.equals("students")) {
+                q1 = "SELECT * from students ";
+            } else if(category.equals("staff")) {
+                q1 = "SELECT * FROM staff";
+            }
+            else if(category.equals("messages")) {
+                q1 = "SELECT * FROM messages";
+            }
+            else if(category.equals("expenses")) {
+                q1 = "SELECT * FROM expenses";
+            }
+            else if(category.equals("teachers")) {
+                q1 = "SELECT * FROM teachers";
+            }
+            else{
+                q1 = "SELECT * FROM revenues";
+            }
+            u = s.executeQuery(q1);
+            //  int numRows = HomePage.jade.getRowCount();
+            this.buildTableModel(u);
+            this.jTable1.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    public void buildTableModel(ResultSet rs)
-            throws SQLException {
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        LoginPage log = new LoginPage(); 
+        log.setVisible(true);
+        
        
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton5KeyTyped
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jButton5KeyTyped
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        // TODO add your handling code here:
+   
+    }//GEN-LAST:event_jTextField1KeyPressed
+    
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // TODO add your handling code here:
+            String category = (jComboBox1.getSelectedItem().toString()).trim();
+        String query = jTextField1.getText();
+        ResultSet rs;
+        //jinx.clear();
+        try {
+            java.sql.Statement s = con.createStatement();
+            if (category.equalsIgnoreCase("students")) {
+                rs = s.executeQuery("Select * from students where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
+            } else if(category.equalsIgnoreCase("staff")) {
+               rs = s.executeQuery("Select * from staff where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
+            }
+             else if(category.equalsIgnoreCase("teachers")) {
+               rs = s.executeQuery("Select * from teachers where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
+            }
+             else if(category.equalsIgnoreCase("revenues")) {
+               rs = s.executeQuery("Select * from revenues where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
+            }
+             else{
+               rs = s.executeQuery("Select * from expenses where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
+            }
+
+            this.buildTableModel(rs);
+            this.jTable1.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+    }//GEN-LAST:event_jTextField1KeyTyped
+    }
+    public void buildTableModel(ResultSet rs)throws SQLException {
+
+        ResultSetMetaData metaData = rs.getMetaData();
+
+        Vector<String> columnNames = new Vector<String>();
+
+        int columnCount = metaData.getColumnCount();
+        for (int column = 1; column <= columnCount; column++) {
+            columnNames.add(metaData.getColumnName(column));
+
+        }
+
+        // data of the table
+        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+        while (rs.next()) {
+            Vector<Object> vector = new Vector<Object>();
+            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                vector.add(rs.getObject(columnIndex));
+
+            }
+            data.add(vector);
+        }
+//        if ((columnNames.get(0)).equalsIgnoreCase("studentID")) {
+//            columnNames.clear();
+//            String[] newColNames = {"Application Name", "Date Deployed", "Server Name", "Server Address", "Remarks"};
+//            for (int column = 0; column < 12; column++) {
+//                columnNames.add(newColNames[column]);
+//
+//            }
+//        }
+        DefaultTableModel xf = new DefaultTableModel(data, columnNames);
+        jade = xf;
+        jTable1.setModel(jade);
 
     }
 
     public void RemoveSelectedData(JTable table) {
+        // Get the selected row from the table.
+        int selectedRow = table.getSelectedRow();
+        ResultSet re = null;
+        if (jade.getColumnName(0).equalsIgnoreCase("StudentID")) {
+            try {
+                int refID = (int) table.getValueAt(selectedRow,1);
+                java.sql.Statement s = con.createStatement();
+                String q1 = "delete FROM students where studentID = " + refID + " ";
+                s.executeUpdate(q1);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+            try {
+
+                java.sql.Statement s = con.createStatement();
+                String q1 = "SELECT * students";
+                re = s.executeQuery(q1);
+                this.buildTableModel(re);
+                this.jTable1.setVisible(true);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+        }
         
+        else if (jade.getColumnName(0).equalsIgnoreCase("StaffID")) {
+            try {
+                int refID = (int) table.getValueAt(selectedRow, 1);
+                java.sql.Statement s = con.createStatement();
+                String q1 = "delete FROM staff where staffID = " + refID + " ";
+                s.executeUpdate(q1);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+            try {
+
+                java.sql.Statement s = con.createStatement();
+                String q1 = "SELECT * from staff";
+                re = s.executeQuery(q1);
+                this.buildTableModel(re);
+                this.jTable1.setVisible(true);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+        }
+         if (jade.getColumnName(0).equalsIgnoreCase("messageID")) {
+            try {
+                int refID = (int) table.getValueAt(selectedRow, 1);
+                java.sql.Statement s = con.createStatement();
+                String q1 = "delete FROM messages where messageID = " + refID + " ";
+                s.executeUpdate(q1);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+            try {
+
+                java.sql.Statement s = con.createStatement();
+                String q1 = "SELECT * from messages";
+                re = s.executeQuery(q1);
+                this.buildTableModel(re);
+                this.jTable1.setVisible(true);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+        }
+          if (jade.getColumnName(0).equalsIgnoreCase("revenueID")) {
+            try {
+                int refID = (int) table.getValueAt(selectedRow, 1);
+                java.sql.Statement s = con.createStatement();
+                String q1 = "delete FROM revenues where revenueID = " + refID + " ";
+                s.executeUpdate(q1);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+            try {
+
+                java.sql.Statement s = con.createStatement();
+                String q1 = "SELECT * from revenues";
+                re = s.executeQuery(q1);
+                this.buildTableModel(re);
+                this.jTable1.setVisible(true);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+        }
+        else {
+            int refID = (int) table.getValueAt(selectedRow,1);
+            try {
+                java.sql.Statement s = con.createStatement();
+                String q1 = "delete FROM teachers where teacherID = " + refID + " ";
+                s.executeUpdate(q1);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+            try {
+
+                java.sql.Statement s = con.createStatement();
+                String q1 = "select * FROM teachers";
+                re = s.executeQuery(q1);
+                this.buildTableModel(re);
+                this.jTable1.setVisible(true);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+        }
 
     }
 
-    public void getSelectedData(JTable table) {
+     public void getSelectedData(JTable table) {
         // Get the selected row from the table.
-       
-       
+//        int selectedRow = table.getSelectedRow();
+//        UpdateSoftware x = new UpdateSoftware();
+//        UpdateServer y = new UpdateServer();
+//        if (jade.getColumnName(0).equalsIgnoreCase("application Name")) {
+//            x.jTextField1.setText(table.getValueAt(selectedRow, 0) + "");
+//            x.jTextField2.setText(table.getValueAt(selectedRow, 7) + "");
+//            x.jComboBox4.setSelectedItem(table.getValueAt(selectedRow, 10) + "");
+//            x.jTextField7.setText(table.getValueAt(selectedRow, 2) + "");
+//            x.jTextField8.setText(table.getValueAt(selectedRow, 3) + "");
+//            x.jTextArea1.setText(table.getValueAt(selectedRow, 4) + "");
+//            x.jTextArea2.setText(table.getValueAt(selectedRow, 5) + "");
+//            x.setVisible(true);
+//
+//        } else {
+//            y.jTextField1.setText(table.getValueAt(selectedRow, 0) + "");
+//            y.jTextField2.setText(table.getValueAt(selectedRow, 1) + "");
+//            y.jTextField3.setText(table.getValueAt(selectedRow, 3) + "");
+//            y.jTextField4.setText(table.getValueAt(selectedRow, 5) + "");
+//            y.jTextArea1.setText(table.getValueAt(selectedRow, 7) + "");
+//            y.jTextArea2.setText(table.getValueAt(selectedRow, 8) + "");
+//            y.jTextField5.setText(table.getValueAt(selectedRow, 11) + "");
+//            y.setVisible(true);
+//        }
 
     }
 
@@ -373,7 +684,7 @@ public class HomePage extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -400,6 +711,10 @@ public class HomePage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
