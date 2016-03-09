@@ -18,7 +18,6 @@ public class Staff {
     protected String birthDate;
     protected String position;
     protected String gender;
-    protected int imageID;
     protected int salary;
     protected String nationality;
     protected String dateEmployed;
@@ -83,13 +82,7 @@ public class Staff {
         this.gender = gender;
     }
 
-    public int getImageID() {
-        return imageID;
-    }
 
-    public void setImageID(int imageID) {
-        this.imageID = imageID;
-    }
 
     public String getPosition() {
         return position;
@@ -115,7 +108,7 @@ public class Staff {
         this.dateEmployed = dateEmployed;
     }
 
-    public Staff(String firstName,String middleName,String lastName,String birthDate,String position, String gender,int imageID,int salary,String nationality,String dateEmployed,String qualifications){
+    public Staff(String firstName,String middleName,String lastName,String birthDate,String position, String gender,int salary,String nationality,String dateEmployed,String qualifications){
     
     this.firstName = firstName;
     this.middleName = middleName;
@@ -123,7 +116,6 @@ public class Staff {
     this.birthDate = birthDate;
     this.position = position;
     this.gender = gender;
-    this.imageID = imageID;
     this.salary = salary;
     this.nationality = nationality;
     this.dateEmployed = dateEmployed;

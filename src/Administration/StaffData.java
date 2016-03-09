@@ -47,9 +47,51 @@ public class StaffData {
     }
 
     public StaffData() {
+        
         initialize();
     }
 
+     public void addImage(File newImage, String path) {
+        PreparedStatement st = null;
+        ResultSet r = null;
+        int id= 0;
+        String query = "SELECT MAX(staffID) FROM staff";
+        try {
+            String stm = "INSERT INTO images(source,personID,category)VALUES(?,?,?)";
+            st = conn.prepareStatement(query);
+            r = st.executeQuery();
+          if(r.next()){
+           id = r.getInt(1);
+           System.out.println(id);
+          }
+            int pid = id + 1;
+            p = conn.prepareStatement(stm);
+            p.setString(1, path);
+            p.setInt(2, pid);
+            p.setString(3, "staff");
+            p.executeUpdate();
+
+            System.out.println("New Image Added");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+     
+    public void updateImage(File newImage, String path, int sid) {
+        try {
+            String stm = "update images set source = ?,category = ? where personID = "+sid+"";
+            p = conn.prepareStatement(stm);
+            p.setString(1, path);
+            p.setString(2,"staff");
+            p.executeUpdate();
+
+            System.out.println(" Image Updated");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     //this method adds a Taxi to the database
     public void addStaff(Staff neo) {
         String firstName = neo.getFirstName();
@@ -62,10 +104,10 @@ public class StaffData {
         String qualifications = neo.getQualifications();
         String dateEmployed = neo.getDateEmployed();
         int salary = neo.getSalary();
-        int imageID = neo.getImageID();
+     
 
         try {
-            String stm = "INSERT INTO staff(firstname,middlename,lastname,birthDate,gender,nationality,position,dateemployed,qualifications,salary,imageID)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+            String stm = "INSERT INTO staff(firstname,middlename,lastname,birthDate,gender,nationality,position,dateemployed,qualifications,salary)VALUES(?,?,?,?,?,?,?,?,?,?)";
             p = conn.prepareStatement(stm);
             p.setString(1, firstName);
             p.setString(2, middleName);
@@ -74,10 +116,10 @@ public class StaffData {
             p.setString(5, gender);
             p.setString(6, nationality);
             p.setString(7, position);
-            p.setString(8, qualifications);
-            p.setString(9, dateEmployed);
+            p.setString(8, dateEmployed);
+            p.setString(9, qualifications);
             p.setInt(10, salary);
-            p.setInt(11, imageID);
+            
 
             p.executeUpdate();
 
@@ -100,10 +142,9 @@ public class StaffData {
         String qualifications = neo.getQualifications();
         String dateEmployed = neo.getDateEmployed();
         int salary = neo.getSalary();
-        int imageID = neo.getImageID();
 
         try {
-            String stm = "update staff set firstname = ?,middlename=?,lastname = ?,birthDate=?,gender = ?,nationality = ?,position = ?,qualification =?,dateEmployed = ?,salary = ?,imageID = ? where staffID=?";
+            String stm = "update staff set firstname = ?,middlename=?,lastname = ?,birthDate=?,gender = ?,nationality = ?,position = ?,qualification =?,dateEmployed = ?,salary = ? where staffID=?";
             p = conn.prepareStatement(stm);
             p.setString(1, firstName);
             p.setString(2, middleName);
@@ -115,7 +156,6 @@ public class StaffData {
             p.setString(8, qualifications);
             p.setString(9, dateEmployed);
             p.setInt(10, salary);
-            p.setInt(11, imageID);
             p.executeUpdate();
             System.out.println("Student Data Updated");
         } catch (Exception e) {

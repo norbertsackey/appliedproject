@@ -5,7 +5,12 @@
  */
 package Administration;
 
+import Accounting.EditExpense;
+import Accounting.EditRevenue;
 import Login.LoginPage;
+import Messaging.AddMessage;
+import java.awt.Image;
+import java.awt.Rectangle;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,6 +21,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,6 +34,7 @@ public class HomePage extends javax.swing.JFrame {
     public static DefaultTableModel jade = new DefaultTableModel();
     public static DefaultListModel jinx = new DefaultListModel();
 
+    public static int personID = 0;
     Connection con = null;
     PreparedStatement pst = null;
     java.sql.ResultSet u = null;
@@ -48,7 +55,7 @@ public class HomePage extends javax.swing.JFrame {
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
 
         }
-    
+
         jButton1.setToolTipText("Add New Staff");
         jButton2.setToolTipText("Add New Student");
         jButton3.setToolTipText("Reload Table");
@@ -369,38 +376,40 @@ public class HomePage extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-       RemoveSelectedData(jTable1);
-      
+        RemoveSelectedData(jTable1);
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     @SuppressWarnings("related to input file ")
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-     
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
+
+        this.getSelectedData(jTable1);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -416,19 +425,15 @@ public class HomePage extends javax.swing.JFrame {
             java.sql.Statement s = con.createStatement();
             if (category.equals("students")) {
                 q1 = "SELECT * from students ";
-            } else if(category.equals("staff")) {
+            } else if (category.equals("staff")) {
                 q1 = "SELECT * FROM staff";
-            }
-            else if(category.equals("messages")) {
+            } else if (category.equals("messages")) {
                 q1 = "SELECT * FROM messages";
-            }
-            else if(category.equals("expenses")) {
+            } else if (category.equals("expenses")) {
                 q1 = "SELECT * FROM expenses";
-            }
-            else if(category.equals("teachers")) {
+            } else if (category.equals("teachers")) {
                 q1 = "SELECT * FROM teachers";
-            }
-            else{
+            } else {
                 q1 = "SELECT * FROM revenues";
             }
             u = s.executeQuery(q1);
@@ -456,25 +461,25 @@ public class HomePage extends javax.swing.JFrame {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        LoginPage log = new LoginPage(); 
+        LoginPage log = new LoginPage();
         log.setVisible(true);
-        
-       
+
+
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton5KeyTyped
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jButton5KeyTyped
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
-   
+
     }//GEN-LAST:event_jTextField1KeyPressed
-    
+
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
         // TODO add your handling code here:
-            String category = (jComboBox1.getSelectedItem().toString()).trim();
+        String category = (jComboBox1.getSelectedItem().toString()).trim();
         String query = jTextField1.getText();
         ResultSet rs;
         //jinx.clear();
@@ -482,17 +487,14 @@ public class HomePage extends javax.swing.JFrame {
             java.sql.Statement s = con.createStatement();
             if (category.equalsIgnoreCase("students")) {
                 rs = s.executeQuery("Select * from students where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
-            } else if(category.equalsIgnoreCase("staff")) {
-               rs = s.executeQuery("Select * from staff where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
-            }
-             else if(category.equalsIgnoreCase("teachers")) {
-               rs = s.executeQuery("Select * from teachers where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
-            }
-             else if(category.equalsIgnoreCase("revenues")) {
-               rs = s.executeQuery("Select * from revenues where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
-            }
-             else{
-               rs = s.executeQuery("Select * from expenses where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
+            } else if (category.equalsIgnoreCase("staff")) {
+                rs = s.executeQuery("Select * from staff where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
+            } else if (category.equalsIgnoreCase("teachers")) {
+                rs = s.executeQuery("Select * from teachers where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
+            } else if (category.equalsIgnoreCase("revenues")) {
+                rs = s.executeQuery("Select * from revenues where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
+            } else {
+                rs = s.executeQuery("Select * from expenses where firstname  like '%" + query + "%' or middlename  like '%" + query + "%' or lastname  like '%" + query + "%'");
             }
 
             this.buildTableModel(rs);
@@ -501,7 +503,8 @@ public class HomePage extends javax.swing.JFrame {
             e.printStackTrace();
     }//GEN-LAST:event_jTextField1KeyTyped
     }
-    public void buildTableModel(ResultSet rs)throws SQLException {
+
+    public void buildTableModel(ResultSet rs) throws SQLException {
 
         ResultSetMetaData metaData = rs.getMetaData();
 
@@ -543,7 +546,7 @@ public class HomePage extends javax.swing.JFrame {
         ResultSet re = null;
         if (jade.getColumnName(0).equalsIgnoreCase("StudentID")) {
             try {
-                int refID = (int) table.getValueAt(selectedRow,1);
+                int refID = (int) table.getValueAt(selectedRow, 0);
                 java.sql.Statement s = con.createStatement();
                 String q1 = "delete FROM students where studentID = " + refID + " ";
                 s.executeUpdate(q1);
@@ -560,11 +563,9 @@ public class HomePage extends javax.swing.JFrame {
             } catch (SQLException x) {
                 x.printStackTrace();
             }
-        }
-        
-        else if (jade.getColumnName(0).equalsIgnoreCase("StaffID")) {
+        } else if (jade.getColumnName(0).equalsIgnoreCase("StaffID")) {
             try {
-                int refID = (int) table.getValueAt(selectedRow, 1);
+                int refID = (int) table.getValueAt(selectedRow, 0);
                 java.sql.Statement s = con.createStatement();
                 String q1 = "delete FROM staff where staffID = " + refID + " ";
                 s.executeUpdate(q1);
@@ -582,9 +583,9 @@ public class HomePage extends javax.swing.JFrame {
                 x.printStackTrace();
             }
         }
-         if (jade.getColumnName(0).equalsIgnoreCase("messageID")) {
+        else if (jade.getColumnName(0).equalsIgnoreCase("messageID")) {
             try {
-                int refID = (int) table.getValueAt(selectedRow, 1);
+                int refID = (int) table.getValueAt(selectedRow, 0);
                 java.sql.Statement s = con.createStatement();
                 String q1 = "delete FROM messages where messageID = " + refID + " ";
                 s.executeUpdate(q1);
@@ -602,9 +603,9 @@ public class HomePage extends javax.swing.JFrame {
                 x.printStackTrace();
             }
         }
-          if (jade.getColumnName(0).equalsIgnoreCase("revenueID")) {
+        else if (jade.getColumnName(0).equalsIgnoreCase("revenueID")) {
             try {
-                int refID = (int) table.getValueAt(selectedRow, 1);
+                int refID = (int) table.getValueAt(selectedRow, 0);
                 java.sql.Statement s = con.createStatement();
                 String q1 = "delete FROM revenues where revenueID = " + refID + " ";
                 s.executeUpdate(q1);
@@ -622,8 +623,30 @@ public class HomePage extends javax.swing.JFrame {
                 x.printStackTrace();
             }
         }
+        
+         else if (jade.getColumnName(0).equalsIgnoreCase("expenseID")) {
+            try {
+                int refID = (int) table.getValueAt(selectedRow, 0);
+                java.sql.Statement s = con.createStatement();
+                String q1 = "delete expenses where expenseID = " + refID + " ";
+                s.executeUpdate(q1);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+            try {
+
+                java.sql.Statement s = con.createStatement();
+                String q1 = "SELECT * from expenses";
+                re = s.executeQuery(q1);
+                this.buildTableModel(re);
+                this.jTable1.setVisible(true);
+            } catch (SQLException x) {
+                x.printStackTrace();
+            }
+        }
+        
         else {
-            int refID = (int) table.getValueAt(selectedRow,1);
+            int refID = (int) table.getValueAt(selectedRow, 0);
             try {
                 java.sql.Statement s = con.createStatement();
                 String q1 = "delete FROM teachers where teacherID = " + refID + " ";
@@ -645,32 +668,146 @@ public class HomePage extends javax.swing.JFrame {
 
     }
 
-     public void getSelectedData(JTable table) {
-        // Get the selected row from the table.
-//        int selectedRow = table.getSelectedRow();
-//        UpdateSoftware x = new UpdateSoftware();
-//        UpdateServer y = new UpdateServer();
-//        if (jade.getColumnName(0).equalsIgnoreCase("application Name")) {
-//            x.jTextField1.setText(table.getValueAt(selectedRow, 0) + "");
-//            x.jTextField2.setText(table.getValueAt(selectedRow, 7) + "");
-//            x.jComboBox4.setSelectedItem(table.getValueAt(selectedRow, 10) + "");
-//            x.jTextField7.setText(table.getValueAt(selectedRow, 2) + "");
-//            x.jTextField8.setText(table.getValueAt(selectedRow, 3) + "");
-//            x.jTextArea1.setText(table.getValueAt(selectedRow, 4) + "");
-//            x.jTextArea2.setText(table.getValueAt(selectedRow, 5) + "");
-//            x.setVisible(true);
-//
-//        } else {
-//            y.jTextField1.setText(table.getValueAt(selectedRow, 0) + "");
-//            y.jTextField2.setText(table.getValueAt(selectedRow, 1) + "");
-//            y.jTextField3.setText(table.getValueAt(selectedRow, 3) + "");
-//            y.jTextField4.setText(table.getValueAt(selectedRow, 5) + "");
-//            y.jTextArea1.setText(table.getValueAt(selectedRow, 7) + "");
-//            y.jTextArea2.setText(table.getValueAt(selectedRow, 8) + "");
-//            y.jTextField5.setText(table.getValueAt(selectedRow, 11) + "");
-//            y.setVisible(true);
-//        }
+    public void getSelectedData(JTable table) {
+        //   Get the selected row from the table.
+        ResultSet u;
+        String q1 = null;
+        int selectedRow = table.getSelectedRow();
 
+        if (jade.getColumnName(0).equalsIgnoreCase("studentID")) {
+            EditStudent stu = new EditStudent();
+            personID = Integer.parseInt((table.getValueAt(selectedRow, 0)).toString());
+            stu.getjTextField17().setText(table.getValueAt(selectedRow, 1) + "");
+            stu.getjTextField1().setText(table.getValueAt(selectedRow, 2) + "");
+            stu.getjTextField18().setText(table.getValueAt(selectedRow, 3) + "");
+            stu.getjTextField19().setText(table.getValueAt(selectedRow, 14) + "");
+            stu.getjComboBox7().setSelectedItem(table.getValueAt(selectedRow, 4) + "");
+            stu.getjComboBox8().setSelectedItem(table.getValueAt(selectedRow, 5) + "");
+            stu.getjComboBox9().setSelectedItem(table.getValueAt(selectedRow, 6) + "");
+            stu.getjTextField21().setText(table.getValueAt(selectedRow, 10) + "");
+            stu.getjTextField22().setText(table.getValueAt(selectedRow, 11) + "");
+            stu.getjTextField23().setText(table.getValueAt(selectedRow, 8) + "");
+            stu.getjTextField24().setText(table.getValueAt(selectedRow, 9) + "");
+            stu.getjTextField20().setText(table.getValueAt(selectedRow, 7) + "");
+            stu.getjTextArea5().setText(table.getValueAt(selectedRow, 12) + "");
+            stu.getjTextArea6().setText(table.getValueAt(selectedRow, 13) + "");
+            q1 = "SELECT * from images where personID = " + table.getValueAt(selectedRow, 0) + " and category = 'students'";
+            String path = "";
+            try {
+                pst = con.prepareStatement(q1);
+                u = pst.executeQuery();
+                if (u.next()) {
+                    path = u.getString("source");
+                    System.out.println(path);
+                    ImageIcon image = new ImageIcon(path);
+                    Rectangle rect = stu.getjLabel2().getBounds();
+                    Image scaledImage = image.getImage().getScaledInstance(rect.width, rect.height, Image.SCALE_DEFAULT);
+                    image = new ImageIcon(scaledImage);
+                    stu.getjLabel2().setIcon(image);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            stu.setVisible(true);
+
+        } else if (jade.getColumnName(0).equalsIgnoreCase("staffID")) {
+            EditStaff stf = new EditStaff();
+            personID = Integer.parseInt((table.getValueAt(selectedRow, 0)).toString());
+            stf.getjTextField1().setText(table.getValueAt(selectedRow, 1) + "");
+            stf.getjTextField2().setText(table.getValueAt(selectedRow, 2) + "");
+            stf.getjTextField3().setText(table.getValueAt(selectedRow, 3) + "");
+            stf.getjTextField4().setText(table.getValueAt(selectedRow, 10) + "");
+            stf.getjComboBox1().setSelectedItem(table.getValueAt(selectedRow, 6) + "");
+            stf.getjTextField5().setText(table.getValueAt(selectedRow, 4) + "");
+            stf.getjTextField6().setText(table.getValueAt(selectedRow, 5) + "");
+            stf.getjComboBox2().setSelectedItem(table.getValueAt(selectedRow, 7) + "");
+            stf.getjTextField8().setText(table.getValueAt(selectedRow, 8) + "");
+            stf.getjTextArea1().setText(table.getValueAt(selectedRow, 9) + "");
+            stf.getjTextField5().setText(table.getValueAt(selectedRow, 4) + "");
+            q1 = "SELECT * from images where personID = " + table.getValueAt(selectedRow, 0) + " and category = 'staff'";
+            String path = "";
+            try {
+                pst = con.prepareStatement(q1);
+                u = pst.executeQuery();
+                if (u.next()) {
+                    path = u.getString("source");
+                    System.out.println(path);
+                    ImageIcon image = new ImageIcon(path);
+                    Rectangle rect = stf.getjLabel15().getBounds();
+                    Image scaledImage = image.getImage().getScaledInstance(rect.width, rect.height, Image.SCALE_DEFAULT);
+                    image = new ImageIcon(scaledImage);
+                    stf.getjLabel15().setIcon(image);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            stf.setVisible(true);
+        } else if (jade.getColumnName(0).equalsIgnoreCase("teacherID")) {
+            EditTeacher tch = new EditTeacher();
+            personID = Integer.parseInt((table.getValueAt(selectedRow, 0)).toString());
+            tch.getjTextField1().setText(table.getValueAt(selectedRow, 1) + "");
+            tch.getjTextField2().setText(table.getValueAt(selectedRow, 2) + "");
+            tch.getjTextField3().setText(table.getValueAt(selectedRow, 3) + "");
+            tch.getjComboBox1().setSelectedItem(table.getValueAt(selectedRow, 4) + "");
+            tch.getjTextField4().setText(table.getValueAt(selectedRow, 5) + "");
+            tch.getjTextArea2().setText(table.getValueAt(selectedRow, 6) + "");
+            tch.getjTextField6().setText(table.getValueAt(selectedRow, 7) + "");
+            tch.getjComboBox2().setSelectedItem(table.getValueAt(selectedRow, 8) + "");
+            tch.getjTextField8().setText(table.getValueAt(selectedRow, 9) + "");
+            tch.getjTextArea1().setText(table.getValueAt(selectedRow, 10) + "");
+            q1 = "SELECT * from images where personID = " + table.getValueAt(selectedRow, 0) + " and category = students";
+            String path = "";
+            try {
+                pst = con.prepareStatement(q1);
+                u = pst.executeQuery();
+                if (u.next()) {
+                    path = u.getString("source");
+                    System.out.println(path);
+                    ImageIcon image = new ImageIcon(path);
+                    Rectangle rect = tch.getjLabel4().getBounds();
+                    Image scaledImage = image.getImage().getScaledInstance(rect.width, rect.height, Image.SCALE_DEFAULT);
+                    image = new ImageIcon(scaledImage);
+                    tch.getjLabel4().setIcon(image);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            tch.setVisible(true);
+        } else if (jade.getColumnName(0).equalsIgnoreCase("messageID")) {
+            AddMessage msg = new AddMessage();
+            personID = Integer.parseInt((table.getValueAt(selectedRow, 0)).toString());
+            msg.getjTextField1().setText(table.getValueAt(selectedRow, 1) + "");
+            msg.getjTextField2().setText(table.getValueAt(selectedRow, 2) + "");
+            msg.getjTextArea1().setText(table.getValueAt(selectedRow, 3) + "");
+            msg.getjTextArea2().setText(table.getValueAt(selectedRow, 4) + "");
+
+            msg.setVisible(true);
+        } else if (jade.getColumnName(0).equalsIgnoreCase("expenseID")) {
+            EditExpense exp = new EditExpense();
+            personID = Integer.parseInt((table.getValueAt(selectedRow, 0)).toString());
+            exp.getjComboBox1().setSelectedItem(table.getValueAt(selectedRow, 1) + "");
+            exp.getjTextField2().setText(table.getValueAt(selectedRow, 2) + "");
+            exp.getjTextField1().setText(table.getValueAt(selectedRow, 3) + "");
+            exp.getjTextArea1().setText(table.getValueAt(selectedRow, 4) + "");
+            exp.getjTextArea2().setText(table.getValueAt(selectedRow, 5) + "");
+            exp.getjComboBox1().setSelectedItem(table.getValueAt(selectedRow, 6) + "");
+            exp.setVisible(true);
+        } else if (jade.getColumnName(0).equalsIgnoreCase("revenueID")) {
+            EditRevenue rev = new EditRevenue();
+            personID = Integer.parseInt((table.getValueAt(selectedRow, 0)).toString());
+            rev.getjComboBox1().setSelectedItem(table.getValueAt(selectedRow, 1) + "");
+            rev.getjTextField2().setText(table.getValueAt(selectedRow, 2) + "");
+            rev.getjTextField1().setText(table.getValueAt(selectedRow, 3) + "");
+            rev.getjTextArea1().setText(table.getValueAt(selectedRow, 4) + "");
+            rev.getjTextArea2().setText(table.getValueAt(selectedRow, 5) + "");
+            rev.getjComboBox1().setSelectedItem(table.getValueAt(selectedRow, 6) + "");
+            rev.setVisible(true);
+            rev.setVisible(true);
+
+        }
     }
 
     /**

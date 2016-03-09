@@ -6,7 +6,13 @@
 package Administration;
 
 import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.PreparedStatement;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -16,18 +22,40 @@ public class AddStudent extends javax.swing.JFrame {
 
     /**
      * Creates new form AddStudent
-     * 
+     *
      */
+    ImageChooser imgch;
     java.sql.Connection conn = null;
     PreparedStatement p = null;
-    
+    DefaultComboBoxModel<String> combomodel;
+
     public AddStudent() {
+        combomodel = new DefaultComboBoxModel();
+        loadReport();
+        imgch = null ;
         initComponents();
+        this.jComboBox9.setModel(combomodel);
         this.setLocationRelativeTo(null);
-       
+
     }
 
-    
+    public void loadReport() {
+
+        try {
+            File nations = new File("C:\\Users\\Jacque\\Documents\\NetBeansProjects\\GIS Administration System\\src\\Administration\\nationalities.txt");
+            InputStream in = new FileInputStream(nations);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String nation = null;
+            while ((nation = br.readLine()) != null) {
+                combomodel.addElement(nation);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,13 +98,13 @@ public class AddStudent extends javax.swing.JFrame {
         jLabel46 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTextArea6 = new javax.swing.JTextArea();
-        jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
         jComboBox9 = new javax.swing.JComboBox();
         jLabel49 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -196,14 +224,6 @@ public class AddStudent extends javax.swing.JFrame {
         jTextArea6.setRows(5);
         jScrollPane6.setViewportView(jTextArea6);
 
-        jButton11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton11.setText("Save");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-
         jButton12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton12.setText("Cancel");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -219,7 +239,6 @@ public class AddStudent extends javax.swing.JFrame {
         jLabel48.setText("Nationality");
 
         jComboBox9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ghanaian", "French", "Kenyan", "Nigerian" }));
         jComboBox9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox9ActionPerformed(evt);
@@ -230,6 +249,14 @@ public class AddStudent extends javax.swing.JFrame {
         jLabel49.setText("Middle Name");
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Save");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -286,8 +313,8 @@ public class AddStudent extends javax.swing.JFrame {
                                                         .addGap(29, 29, 29)
                                                         .addComponent(jToggleButton6))
                                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                                        .addComponent(jButton11)
-                                                        .addGap(25, 25, 25)
+                                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(18, 18, 18)
                                                         .addComponent(jButton12))
                                                     .addComponent(jScrollPane5))))
                                         .addGap(0, 8, Short.MAX_VALUE))
@@ -324,7 +351,7 @@ public class AddStudent extends javax.swing.JFrame {
                                         .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jToggleButton5))
-                                    .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -399,11 +426,11 @@ public class AddStudent extends javax.swing.JFrame {
                                         .addGap(9, 9, 9)
                                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(17, 17, 17)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton11))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(12, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -426,7 +453,7 @@ public class AddStudent extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        imgch = new ImageChooser();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jTextField18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField18ActionPerformed
@@ -455,9 +482,19 @@ public class AddStudent extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
-       String firstName = jTextField17.getText();
+        this.dispose();
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox9ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        String firstName = jTextField17.getText();
         String middleName = jTextField1.getText();
         String lastName = jTextField18.getText();
         String birthDate = jTextField19.getText();
@@ -471,25 +508,17 @@ public class AddStudent extends javax.swing.JFrame {
         int fPhone = Integer.parseInt(jTextField24.getText());
         String poBox = jTextArea5.getText();
         String resAddr = jTextArea6.getText();
-        int imageID = 10202018;
         int guard1ID = 102024;
         int guard2ID = 102025;
 
         Student neos;
-        neos = new Student(firstName,middleName,lastName,grade,gender,nationality,imageID,birthDate,fathersName,fPhone,
-            mothersName,mPhone,poBox,resAddr,dateEnrolled,guard1ID,guard2ID);
+       neos = new Student(firstName, middleName, lastName, grade, gender, nationality, birthDate, fathersName, fPhone,
+        mothersName, mPhone, poBox, resAddr, dateEnrolled, guard1ID, guard2ID);
         StudentData x = new StudentData();
+        File newFile = imgch.getFile();
+        x.addImage(newFile, newFile.getAbsolutePath());
         x.addStudent(neos);
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox9ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -528,8 +557,8 @@ public class AddStudent extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox jComboBox7;

@@ -18,7 +18,6 @@ public class Teacher {
     protected String birthDate;
     protected String subjects;
     protected String gender;
-    protected int imageID;
     protected int salary;
     protected String nationality;
     protected String dateEmployed;
@@ -28,7 +27,7 @@ public class Teacher {
     
     
     
-   public Teacher(String firstName,String middleName,String lastName,String birthDate,String subjects, String gender,int imageID,int salary,String nationality,String dateEmployed,String qualifications){
+   public Teacher(String firstName,String middleName,String lastName,String birthDate,String subjects, String gender,int salary,String nationality,String dateEmployed,String qualifications){
     
     this.firstName = firstName;
     this.middleName = middleName;
@@ -36,7 +35,6 @@ public class Teacher {
     this.birthDate = birthDate;
     this.subjects = subjects;
     this.gender = gender;
-    this.imageID = imageID;
     this.salary = salary;
     this.nationality = nationality;
     this.dateEmployed = dateEmployed;
@@ -89,14 +87,6 @@ public class Teacher {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public int getImageID() {
-        return imageID;
-    }
-
-    public void setImageID(int imageID) {
-        this.imageID = imageID;
     }
 
     public int getSalary() {
