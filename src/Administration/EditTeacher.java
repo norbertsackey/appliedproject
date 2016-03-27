@@ -391,6 +391,7 @@ public class EditTeacher extends javax.swing.JFrame {
         File newFile = imgch.getFile();
         x.updateImage(newFile, newFile.getAbsolutePath(),staffID);
         x.updateTeacher(neo,0);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

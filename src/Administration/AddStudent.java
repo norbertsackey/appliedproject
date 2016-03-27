@@ -31,7 +31,7 @@ public class AddStudent extends javax.swing.JFrame {
 
     public AddStudent() {
         combomodel = new DefaultComboBoxModel();
-        loadReport();
+        loadNations();
         imgch = null ;
         initComponents();
         this.jComboBox9.setModel(combomodel);
@@ -39,7 +39,7 @@ public class AddStudent extends javax.swing.JFrame {
 
     }
 
-    public void loadReport() {
+    public void loadNations() {
 
         try {
             File nations = new File("C:\\Users\\Jacque\\Documents\\NetBeansProjects\\GIS Administration System\\src\\Administration\\nationalities.txt");
@@ -480,6 +480,8 @@ public class AddStudent extends javax.swing.JFrame {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
+        AddGuardian newg = new AddGuardian();
+        newg.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
@@ -518,6 +520,7 @@ public class AddStudent extends javax.swing.JFrame {
         File newFile = imgch.getFile();
         x.addImage(newFile, newFile.getAbsolutePath());
         x.addStudent(neos);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

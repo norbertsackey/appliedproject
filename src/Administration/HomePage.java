@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,6 +34,8 @@ public class HomePage extends javax.swing.JFrame {
 
     public static DefaultTableModel jade = new DefaultTableModel();
     public static DefaultListModel jinx = new DefaultListModel();
+    public static String adminName;
+ 
 
     public static int personID = 0;
     Connection con = null;
@@ -58,13 +61,23 @@ public class HomePage extends javax.swing.JFrame {
 
         jButton1.setToolTipText("Add New Staff");
         jButton2.setToolTipText("Add New Student");
-        jButton3.setToolTipText("Reload Table");
         jButton4.setToolTipText("Add New Teacher");
         jButton5.setToolTipText("Search");
         jButton6.setToolTipText("New SMS Message");
         jButton7.setToolTipText("Delete");
         jButton8.setToolTipText("Edit");
         jButton9.setToolTipText("Export");
+        
+  
+        StudentData x = new StudentData();
+        u = x.getAllStudents();
+        try{
+        buildTableModel(u);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+    } 
+        
     }
 
     /**
@@ -76,6 +89,9 @@ public class HomePage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -87,17 +103,21 @@ public class HomePage extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+
+        jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 33, 55));
@@ -168,6 +188,11 @@ public class HomePage extends javax.swing.JFrame {
         jLabel4.setText("GIS AdminSys ");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "students", "staff", "messages", "expenses", "revenues" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -189,15 +214,6 @@ public class HomePage extends javax.swing.JFrame {
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setBackground(new java.awt.Color(230, 126, 34));
-        jButton3.setForeground(new java.awt.Color(255, 0, 0));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Administration/arrows.png"))); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
             }
         });
 
@@ -226,39 +242,10 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        jButton11.setBackground(new java.awt.Color(236, 162, 95));
-        jButton11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton11.setText("Administration");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setText("view details");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-
-        jButton12.setBackground(new java.awt.Color(236, 162, 95));
-        jButton12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton12.setText("Messaging");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-
-        jButton13.setBackground(new java.awt.Color(236, 162, 95));
-        jButton13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton13.setText("Accounting");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
-            }
-        });
-
-        jButton10.setBackground(new java.awt.Color(236, 162, 95));
-        jButton10.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jButton10.setText("Log out");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -270,21 +257,23 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton11)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton13)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton12)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)
-                        .addComponent(jButton10))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(98, 98, 98))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addGap(31, 31, 31))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -295,62 +284,80 @@ public class HomePage extends javax.swing.JFrame {
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)
                                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(113, 113, 113)
                                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(56, 56, 56)
+                                .addGap(55, 55, 55)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1279, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 12, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(23, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton10)))))
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1))))
+                            .addComponent(jTextField1)))
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53))
         );
+
+        jMenuBar1.setBackground(new java.awt.Color(94, 176, 153));
+
+        jMenu1.setBackground(new java.awt.Color(94, 176, 153));
+        jMenu1.setText("File");
+
+        jMenuItem4.setText("New");
+        jMenu1.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setBackground(new java.awt.Color(94, 176, 153));
+        jMenu2.setText("Edit");
+
+        jMenuItem2.setText("Edit Student");
+        jMenu2.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setBackground(new java.awt.Color(94, 176, 153));
+        jMenu3.setText("Help");
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -387,85 +394,42 @@ public class HomePage extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        AddMessage msg = new AddMessage();
+        msg.setVisible(true);
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
     @SuppressWarnings("related to input file ")
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        AddTeacher newt = new AddTeacher();
+        newt.setVisible(true);
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        AddStaff newst = new AddStaff();
+        newst.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        AddStudent news = new AddStudent();
+        news.setVisible(true);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-
-        this.getSelectedData(jTable1);
+    this.getSelectedData(jTable1);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        String category = (jComboBox1.getSelectedItem().toString()).trim();
-        ResultSet u;
-        String q1 = null;
-        try {
-            java.sql.Statement s = con.createStatement();
-            if (category.equals("students")) {
-                q1 = "SELECT * from students ";
-            } else if (category.equals("staff")) {
-                q1 = "SELECT * FROM staff";
-            } else if (category.equals("messages")) {
-                q1 = "SELECT * FROM messages";
-            } else if (category.equals("expenses")) {
-                q1 = "SELECT * FROM expenses";
-            } else if (category.equals("teachers")) {
-                q1 = "SELECT * FROM teachers";
-            } else {
-                q1 = "SELECT * FROM revenues";
-            }
-            u = s.executeQuery(q1);
-            //  int numRows = HomePage.jade.getRowCount();
-            this.buildTableModel(u);
-            this.jTable1.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton13ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        LoginPage log = new LoginPage();
-        log.setVisible(true);
-
-
-    }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton5KeyTyped
         // TODO add your handling code here:
@@ -474,9 +438,12 @@ public class HomePage extends javax.swing.JFrame {
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
-
+        
+        
     }//GEN-LAST:event_jTextField1KeyPressed
 
+    
+    
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
         // TODO add your handling code here:
         String category = (jComboBox1.getSelectedItem().toString()).trim();
@@ -503,21 +470,63 @@ public class HomePage extends javax.swing.JFrame {
             e.printStackTrace();
     }//GEN-LAST:event_jTextField1KeyTyped
     }
+    
+    
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+          String category = (jComboBox1.getSelectedItem().toString()).trim();
+        ResultSet u;
+        String q1 = null;
+        try {
+            java.sql.Statement s = con.createStatement();
+            if (category.equals("students")) {
+                q1 = "SELECT * from students ";
+            } else if (category.equals("staff")) {
+                q1 = "SELECT * FROM staff";
+            } else if (category.equals("messages")) {
+                q1 = "SELECT * FROM messages";
+            } else if (category.equals("expenses")) {
+                q1 = "SELECT * FROM expenses";
+            } else if (category.equals("teachers")) {
+                q1 = "SELECT * FROM teachers";
+            } else {
+                q1 = "SELECT * FROM revenues";
+            }
+            u = s.executeQuery(q1);
+            //  int numRows = HomePage.jade.getRowCount();
+            this.buildTableModel(u);
+            this.jTable1.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.viewSelectedData(jTable1);
+       
+    }//GEN-LAST:event_jButton3ActionPerformed
+    
+    
+    
+    
+    
 
     public void buildTableModel(ResultSet rs) throws SQLException {
 
         ResultSetMetaData metaData = rs.getMetaData();
-
         Vector<String> columnNames = new Vector<String>();
-
-        int columnCount = metaData.getColumnCount();
-        for (int column = 1; column <= columnCount; column++) {
+         int columnCount = metaData.getColumnCount();
+        
+        for (int column = 1; column < columnCount; column++) {
             columnNames.add(metaData.getColumnName(column));
 
         }
-
-        // data of the table
         Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+      
+  
+      if ((columnNames.get(0)).equalsIgnoreCase("studentID")==false) {
         while (rs.next()) {
             Vector<Object> vector = new Vector<Object>();
             for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
@@ -526,19 +535,37 @@ public class HomePage extends javax.swing.JFrame {
             }
             data.add(vector);
         }
-//        if ((columnNames.get(0)).equalsIgnoreCase("studentID")) {
-//            columnNames.clear();
-//            String[] newColNames = {"Application Name", "Date Deployed", "Server Name", "Server Address", "Remarks"};
-//            for (int column = 0; column < 12; column++) {
-//                columnNames.add(newColNames[column]);
-//
-//            }
-//        }
-        DefaultTableModel xf = new DefaultTableModel(data, columnNames);
-        jade = xf;
-        jTable1.setModel(jade);
+      }
+       
+       
+     else  {
+           columnCount = 9;
+           String[] newColNames = {"studentID","firstname", "middlename", "lastname", "grade", "gender","Nationality", "DateEnrolled", "BirthDate"};
+           columnNames.clear();
+            for (int column = 0; column < 9; column++) {
+             columnNames.add(newColNames[column]);
+         }
+         
+            data = new Vector<Vector<Object>>();
+            while (rs.next()) {
+            Vector<Object> vector = new Vector<Object>();
+            for (int columnIndex = 0; columnIndex < 9; columnIndex++) {
+                vector.add(rs.getObject(newColNames[columnIndex]));
+
+            }
+            data.add(vector);
+    }
+     
 
     }
+        DefaultTableModel xf = new DefaultTableModel(data,columnNames);
+        jade = xf;
+        jTable1.setModel(jade);
+    }
+    
+    
+    
+    
 
     public void RemoveSelectedData(JTable table) {
         // Get the selected row from the table.
@@ -667,6 +694,64 @@ public class HomePage extends javax.swing.JFrame {
         }
 
     }
+    
+    public void viewSelectedData(JTable table){
+        ResultSet u;
+        String q1 = null;
+        int selectedRow = table.getSelectedRow();
+
+        if (jade.getColumnName(0).equalsIgnoreCase("studentID")) {
+            ViewStudent stu = new ViewStudent();
+            personID = Integer.parseInt((table.getValueAt(selectedRow, 0)).toString());
+            stu.getjTextField17().setText(table.getValueAt(selectedRow, 1) + "");
+            stu.getjTextField1().setText(table.getValueAt(selectedRow, 2) + "");
+            stu.getjTextField18().setText(table.getValueAt(selectedRow, 3) + "");
+            stu.getjTextField19().setText(table.getValueAt(selectedRow, 8) + "");
+            stu.getjComboBox7().setSelectedItem(table.getValueAt(selectedRow, 4) + "");
+            stu.getjComboBox8().setSelectedItem(table.getValueAt(selectedRow, 5) + "");
+            stu.getjComboBox9().setSelectedItem(table.getValueAt(selectedRow, 6) + "");
+         
+           stu.getjTextField20().setText(table.getValueAt(selectedRow, 7) + "");
+           
+            q1 = "SELECT * from images where personID = " + table.getValueAt(selectedRow, 0) + " and category = 'students'";
+            String q2 = "SELECT * from students where studentID ='"+personID+"'";
+            String path = "";
+            try {
+                pst = con.prepareStatement(q1);
+                u = pst.executeQuery();
+                if (u.next()) {
+                    path = u.getString("source");
+                    System.out.println(path);
+                    ImageIcon image = new ImageIcon(path);
+                    Rectangle rect = stu.getjLabel2().getBounds();
+                    Image scaledImage = image.getImage().getScaledInstance(rect.width, rect.height, Image.SCALE_DEFAULT);
+                    image = new ImageIcon(scaledImage);
+                    stu.getjLabel2().setIcon(image);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                pst = con.prepareStatement(q2);
+                u = pst.executeQuery();
+                if (u.next()) {
+              stu.getjTextField21().setText(u.getString("mothersname") + "");
+              stu.getjTextField22().setText(u.getInt("mphone") + "");
+              stu.getjTextField23().setText(u.getString("fathersname") + "");
+              stu.getjTextField24().setText(u.getString("fphone") + "");
+              stu.getjTextArea5().setText(u.getString("pobox") + "");
+              stu.getjTextArea6().setText(u.getString("resaddr") + "");
+                  
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            stu.setVisible(true);
+
+        }
+    
+    }
 
     public void getSelectedData(JTable table) {
         //   Get the selected row from the table.
@@ -680,18 +765,15 @@ public class HomePage extends javax.swing.JFrame {
             stu.getjTextField17().setText(table.getValueAt(selectedRow, 1) + "");
             stu.getjTextField1().setText(table.getValueAt(selectedRow, 2) + "");
             stu.getjTextField18().setText(table.getValueAt(selectedRow, 3) + "");
-            stu.getjTextField19().setText(table.getValueAt(selectedRow, 14) + "");
+            stu.getjTextField19().setText(table.getValueAt(selectedRow, 8) + "");
             stu.getjComboBox7().setSelectedItem(table.getValueAt(selectedRow, 4) + "");
             stu.getjComboBox8().setSelectedItem(table.getValueAt(selectedRow, 5) + "");
             stu.getjComboBox9().setSelectedItem(table.getValueAt(selectedRow, 6) + "");
-            stu.getjTextField21().setText(table.getValueAt(selectedRow, 10) + "");
-            stu.getjTextField22().setText(table.getValueAt(selectedRow, 11) + "");
-            stu.getjTextField23().setText(table.getValueAt(selectedRow, 8) + "");
-            stu.getjTextField24().setText(table.getValueAt(selectedRow, 9) + "");
-            stu.getjTextField20().setText(table.getValueAt(selectedRow, 7) + "");
-            stu.getjTextArea5().setText(table.getValueAt(selectedRow, 12) + "");
-            stu.getjTextArea6().setText(table.getValueAt(selectedRow, 13) + "");
+         
+           stu.getjTextField20().setText(table.getValueAt(selectedRow, 7) + "");
+           
             q1 = "SELECT * from images where personID = " + table.getValueAt(selectedRow, 0) + " and category = 'students'";
+            String q2 = "SELECT * from students where studentID ='"+personID+"'";
             String path = "";
             try {
                 pst = con.prepareStatement(q1);
@@ -704,6 +786,21 @@ public class HomePage extends javax.swing.JFrame {
                     Image scaledImage = image.getImage().getScaledInstance(rect.width, rect.height, Image.SCALE_DEFAULT);
                     image = new ImageIcon(scaledImage);
                     stu.getjLabel2().setIcon(image);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                pst = con.prepareStatement(q2);
+                u = pst.executeQuery();
+                if (u.next()) {
+              stu.getjTextField21().setText(u.getString("mothersname") + "");
+              stu.getjTextField22().setText(u.getInt("mphone") + "");
+              stu.getjTextField23().setText(u.getString("fathersname") + "");
+              stu.getjTextField24().setText(u.getString("fphone") + "");
+              stu.getjTextArea5().setText(u.getString("pobox") + "");
+              stu.getjTextArea6().setText(u.getString("resaddr") + "");
+                  
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -809,6 +906,11 @@ public class HomePage extends javax.swing.JFrame {
 
         }
     }
+    
+    public JLabel getLogin(){
+    
+        return this.jLabel2;
+    }
 
     /**
      * @param args the command line arguments
@@ -848,10 +950,6 @@ public class HomePage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -865,8 +963,17 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
+    public static javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

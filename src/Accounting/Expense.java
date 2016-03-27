@@ -12,10 +12,10 @@ package Accounting;
 public class Expense {
 
    
-    protected int expenseType ;
+    protected String expenseType ;
     protected int amount;
     protected String dateofExp;
-    protected int[] payees ;
+    protected String payee ;
     protected String desc ;
     
     
@@ -23,24 +23,22 @@ public class Expense {
     
     }
     
-    public Expense(int expenseType, int amount, String dateofExp, String description, String [] payees){
+    public Expense(String expenseType, int amount, String dateofExp, String description, String payee){
     this.expenseType = expenseType;
     this.amount = amount;
     this.dateofExp = dateofExp;
     this.desc  = description;
-    this.payees = new int [100];
+    this.payee = payee;
   
+    }
     
-    for(int i = 0 ; i < payees.length; i++){
-       this.payees[i] = Integer.parseInt(payees[i]);
-       
-    }
-    }
-    public int getExpenseType() {
+    
+    
+    public String getExpenseType() {
         return expenseType;
     }
 
-    public void setExpenseType(int expenseType) {
+    public void setExpenseType(String expenseType) {
         this.expenseType = expenseType;
     }
 
@@ -67,17 +65,13 @@ public class Expense {
     public void setDescription(String description) {
         this.desc = description;
     }
-    public int getPayee(int i){
+    public String getPayee(){
       
-        return payees[i];
+        return payee;
     }
-
-    public int[] getPayees() {
-        return payees;
-    }
-
-    public void setPayees(int[] payees) {
-        this.payees = payees;
+    
+    public void setPayee(String payees) {
+        this.payee = payees;
     }
 
     public String getDesc() {

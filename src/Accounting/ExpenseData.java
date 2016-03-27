@@ -42,23 +42,22 @@ public class ExpenseData {
     }
 
     //this method adds a Taxi to the database
-    public void addExpense(Expense neo, int i) {
-        int expenseType = neo.getExpenseType();
+    public void addExpense(Expense neo) {
+        String expenseType = neo.getExpenseType();
         int amount = neo.getAmount();
         String dateofExp = neo.getDateofExp();
-        int payee = neo.getPayee(i);
+        String payee = neo.getPayee();
         String desc = neo.getDescription();
-        
 
         try {
             String stm = "INSERT INTO expenses(expenseType,amount,dateofExp,payee,descrip)VALUES(?,?,?,?,?)";
             p = conn.prepareStatement(stm);
-            p.setInt(1, expenseType);
+            p.setString(1, expenseType);
             p.setInt(2, amount);
             p.setString(3, dateofExp);
-            p.setInt(4, payee);
+            p.setString(4, payee);
             p.setString(5, desc);
-           
+
             p.executeUpdate();
 
             System.out.println("New Expense Added");
@@ -69,24 +68,23 @@ public class ExpenseData {
     }
 
     //this method updates a Student in the database
-    public void updateExpense(Expense neo, int i, int id) {
-        int expenseType = neo.getExpenseType();
+    public void updateExpense(Expense neo, int id) {
+        String expenseType = neo.getExpenseType();
         int amount = neo.getAmount();
         String dateofExp = neo.getDateofExp();
-        int payee = neo.getPayee(i);
+        String payee = neo.getPayee();
         String desc = neo.getDescription();
-       
 
         try {
             String stm = "update expenses set expenseType = ?,amount=?,dateofExp = ?, payee=?,descrip = ? where expenseID=?";
             p = conn.prepareStatement(stm);
-            p.setInt(1, expenseType);
+            p.setString(1, expenseType);
             p.setInt(2, amount);
             p.setString(3, dateofExp);
-            p.setInt(4, payee);
+            p.setString(4, payee);
             p.setString(5, desc);
-            p.setInt(6,id);
-            
+            p.setInt(6, id);
+
             p.executeUpdate();
             System.out.println("Expense Data Updated");
         } catch (Exception e) {
@@ -119,9 +117,9 @@ public class ExpenseData {
                 array.add(u.getString("expenseType"));
                 array.add(Integer.toString(u.getInt("amount")));
                 array.add(u.getString("dateofExp"));
-               array.add(Integer.toString(u.getInt("payee")));
+                array.add(u.getString("payee"));
                 array.add(u.getString("descrip"));
-               
+
             } else {
                 JOptionPane.showMessageDialog(null, "No Expense with that ID number exist!");
             }
@@ -138,16 +136,15 @@ public class ExpenseData {
 
         try {
             Statement s = conn.createStatement();
-            String query = "SELECT * FROM Expense WHERE firstname = '" + expenseType + "'";
+            String query = "SELECT * FROM Expense WHERE expensetype like %'" + expenseType + "'%";
             u = s.executeQuery(query);
             if (u.next()) {
                 array.add(Integer.toString(u.getInt("ExpenseID")));
                 array.add(u.getString("expenseType"));
                 array.add(Integer.toString(u.getInt("amount")));
                 array.add(u.getString("dateofExp"));
-               array.add(Integer.toString(u.getInt("payee")));
+                array.add(u.getString("payee"));
                 array.add(u.getString("descrip"));
-                
 
             } else {
                 JOptionPane.showMessageDialog(null, "No Expense with that ID number exist!");
@@ -176,7 +173,7 @@ public class ExpenseData {
                 writer.println(u.getString("expenseType"));
                 writer.println(Integer.toString(u.getInt("amount")));
                 writer.println(u.getString("dateofExp"));
-              writer.println(Integer.toString(u.getInt("payee")));
+                writer.println(u.getString("payee"));
                 writer.println(u.getString("descrip"));
 
             }

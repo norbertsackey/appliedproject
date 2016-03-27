@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="GIS_Administration_System">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/GIS_Administration_System.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

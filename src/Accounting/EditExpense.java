@@ -6,6 +6,7 @@
 package Accounting;
 
 import Administration.DatePicker;
+import Administration.HomePage;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -97,7 +98,6 @@ public class EditExpense extends javax.swing.JFrame {
         jScrollPane2.setBounds(90, 370, 210, 110);
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Utility", "Taxes", "Fuel", "Stationery" }));
         jPanel1.add(jComboBox1);
         jComboBox1.setBounds(150, 90, 90, 30);
 
@@ -109,7 +109,7 @@ public class EditExpense extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2);
-        jButton2.setBounds(610, 460, 80, 30);
+        jButton2.setBounds(470, 460, 80, 30);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton1.setText("Save");
@@ -119,7 +119,7 @@ public class EditExpense extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(520, 460, 80, 30);
+        jButton1.setBounds(360, 460, 80, 30);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Description");
@@ -153,17 +153,17 @@ public class EditExpense extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Accounting/12434-NO8F1O.jpg"))); // NOI18N
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(0, 0, 714, 510);
+        jLabel2.setBounds(0, 0, 590, 520);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
         );
 
         pack();
@@ -180,18 +180,17 @@ public class EditExpense extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int expID = 1;
-        int expenseType = Integer.parseInt(jComboBox1.getSelectedItem().toString());
+        String expenseType =  jComboBox1.getSelectedItem().toString();
         int amount = Integer.parseInt(jTextField2.getText());
         String dateofExp = jTextField1.getText();
-        String [] payees = jTextArea1.getText().trim().split(";");
+        String payee = jTextArea1.getText();
         String desc = jTextArea2.getText();
-        Expense neoex = new Expense(expenseType,amount,dateofExp,desc,payees); 
+        Expense neoex = new Expense(expenseType,amount,dateofExp,desc,payee); 
         ExpenseData exd = new ExpenseData();
-        for (int i = 0; i < payees.length; i++) {
-               exd.updateExpense(neoex,i,expID);
+        exd.updateExpense(neoex,HomePage.personID);
+        this.dispose();
             
-        }
+        
        
     }//GEN-LAST:event_jButton1ActionPerformed
 

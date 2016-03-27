@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="GIS Administration System">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/smsghapi-java-v2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/mysql-connector-java-3.1.11-bin.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

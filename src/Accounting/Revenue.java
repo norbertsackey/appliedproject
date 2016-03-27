@@ -11,23 +11,28 @@ package Accounting;
  */
 public class Revenue {
 
-    protected int revenueType;
+    protected String revenueType;
     protected int amount;
     protected String dateRec;
-    protected int[] payers;
+    protected String payer;
     protected String desc;
 
-    public Revenue(int revenueType, int amount, String dateRec, String[] payers, String desc) {
+    public String getPayer() {
+        return payer;
+    }
+
+    public void setPayer(String payer) {
+        this.payer = payer;
+    }
+    
+
+    public Revenue(String revenueType, int amount, String dateRec, String payer, String desc) {
         this.revenueType = revenueType;
         this.amount = amount;
         this.dateRec = dateRec;
         this.desc = desc;
-        this.payers = new int [100];
-    for(int i = 0 ; i < payers.length; i++){
-       this.payers[i] = Integer.parseInt(payers[i]);
+        this.payer = payer;
        
-    }
-        
     }
 
     public String getDesc() {
@@ -38,11 +43,11 @@ public class Revenue {
         this.desc = desc;
     }
 
-    public int getRevenueType() {
+    public String getRevenueType() {
         return revenueType;
     }
 
-    public void setRevenueType(int revenueType) {
+    public void setRevenueType(String revenueType) {
         this.revenueType = revenueType;
     }
 
@@ -62,19 +67,6 @@ public class Revenue {
         this.dateRec = dateRec;
     }
 
-    public int[] getPayers() {
-        return payers;
-    }
-
-    public void setPayers(int[] payers) {
-        this.payers = payers;
-    }
-
-  
-
-    public int getPayer(int i) {
-
-        return payers[i];
-    }
+   
 
 }

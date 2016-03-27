@@ -392,6 +392,7 @@ public class AddTeacher extends javax.swing.JFrame {
         Teacher neo = new Teacher(firstName, middleName, lastName, birthDate, subjects, gender,salary, nationality, dateEmployed, qualifications);
         TeacherData x = new TeacherData();
         x.addTeacher(neo);
+        this.dispose();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 

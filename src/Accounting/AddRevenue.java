@@ -6,20 +6,65 @@
 package Accounting;
 
 import Administration.DatePicker;
+import Login.LoginPage;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
  * @author Jacque
  */
 public class AddRevenue extends javax.swing.JFrame {
-
+java.sql.Connection conn = null;
+    PreparedStatement p = null;
+    DefaultComboBoxModel<String> combomodel;
+    
+    String url = "jdbc:mysql://localhost/applied_project";
+    String user = "root";
+    String password = "";
     /**
      * Creates new form AddExpense
      */
     public AddRevenue() {
+         try {
+
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (Exception ex) {
+            Logger lgr = Logger.getLogger(LoginPage.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        combomodel = new DefaultComboBoxModel();
+        loadRevenueTypes();
         initComponents();
+        this.jComboBox1.setModel(combomodel);
     }
 
+    public void loadRevenueTypes() {
+         String query;
+
+        try {
+           Statement stmt = (Statement) conn.createStatement();
+            query = "SELECT * FROM revenuetypes";
+            String expenseType = "";
+            stmt.executeQuery(query);
+            ResultSet rs = stmt.getResultSet();
+           
+            
+            while (rs.next()) {
+                expenseType = rs.getString("revtype");
+                combomodel.addElement(expenseType);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,8 +78,6 @@ public class AddRevenue extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jComboBox2 = new javax.swing.JComboBox();
-        jComboBox3 = new javax.swing.JComboBox();
         jTextField1 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -47,7 +90,6 @@ public class AddRevenue extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -68,17 +110,7 @@ public class AddRevenue extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(130, 250, 210, 100);
-
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(320, 150, 90, 30);
-
-        jComboBox3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox3);
-        jComboBox3.setBounds(350, 250, 90, 30);
+        jScrollPane1.setBounds(130, 250, 220, 100);
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel1.add(jTextField1);
@@ -99,12 +131,11 @@ public class AddRevenue extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextArea2);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(130, 360, 210, 110);
+        jScrollPane2.setBounds(130, 360, 220, 110);
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3" }));
         jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(130, 90, 60, 30);
+        jComboBox1.setBounds(130, 90, 120, 30);
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton2.setText("Cancel");
@@ -114,7 +145,7 @@ public class AddRevenue extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2);
-        jButton2.setBounds(610, 460, 80, 30);
+        jButton2.setBounds(490, 460, 80, 30);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton1.setText("Save");
@@ -124,7 +155,7 @@ public class AddRevenue extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(520, 460, 80, 30);
+        jButton1.setBounds(390, 460, 80, 30);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Description");
@@ -151,20 +182,15 @@ public class AddRevenue extends javax.swing.JFrame {
         jPanel1.add(jLabel3);
         jLabel3.setBounds(10, 90, 100, 30);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Add Expense");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(190, 10, 100, 20);
-
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Accounting/12434-NO8F1Oa.jpg"))); // NOI18N
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(0, 0, 714, 510);
+        jLabel2.setBounds(0, 0, 590, 510);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,18 +211,15 @@ public class AddRevenue extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int revenueType = Integer.parseInt(jComboBox1.getSelectedItem().toString());
+        String revenueType = jComboBox1.getSelectedItem().toString();
         int amount = Integer.parseInt(jTextField2.getText());
         String dateRec = jTextField1.getText();
-        String [] payers = jTextArea1.getText().trim().split(";");
+        String payers = jTextArea1.getText();
         String desc = jTextArea2.getText();
-        Revenue neoex = new Revenue(revenueType,amount,dateRec,payers,desc); 
-        RevenueData exd = new RevenueData();
-        for (int i = 0; i < payers.length; i++) {
-               exd.addRevenue(neoex,i);
-            
-        }
-       
+        Revenue rev = new Revenue(revenueType,amount,dateRec,payers,desc); 
+        RevenueData revd = new RevenueData();
+        revd.addRevenue(rev);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -247,9 +270,6 @@ public class AddRevenue extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

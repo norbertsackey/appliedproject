@@ -64,10 +64,9 @@ public class AddMessage extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(410, 180, 73, 30);
+        jButton1.setBounds(410, 190, 73, 30);
 
         jTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField2.setText("jTextField2");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -81,7 +80,7 @@ public class AddMessage extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextArea2);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(120, 230, 280, 120);
+        jScrollPane2.setBounds(120, 240, 280, 120);
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton2.setText("Send");
@@ -106,7 +105,7 @@ public class AddMessage extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Content");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(40, 230, 60, 20);
+        jLabel3.setBounds(40, 240, 60, 20);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Sender");
@@ -133,7 +132,7 @@ public class AddMessage extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(120, 130, 280, 80);
+        jScrollPane1.setBounds(120, 140, 280, 80);
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -142,7 +141,7 @@ public class AddMessage extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(120, 90, 170, 30);
+        jTextField1.setBounds(120, 90, 210, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Messaging/background2.png"))); // NOI18N
         jPanel1.add(jLabel1);
@@ -164,6 +163,8 @@ public class AddMessage extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        AddRecipients addrec = new AddRecipients();
+        addrec.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -183,6 +184,7 @@ public class AddMessage extends javax.swing.JFrame {
         MessageData mdata = new MessageData();
         mdata.addMessage(mes);
         mes.sendMessages();
+        this.dispose();
 
 
     }//GEN-LAST:event_jButton2ActionPerformed

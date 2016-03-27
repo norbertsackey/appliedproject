@@ -45,28 +45,42 @@ public class LoginPage extends javax.swing.JFrame {
     }
 
     public boolean loginCheck(String username, String password) {
-        String query;
+        String query,query2;
         String dbUsername, dbPassword;
         boolean login = false;
 
         try {
 
             Statement stmt = (Statement) conn.createStatement();
+            Statement stmt2= (Statement) conn.createStatement();
             query = "SELECT * FROM users;";
+           
             stmt.executeQuery(query);
             ResultSet rs = stmt.getResultSet();
 
             while (rs.next()) {
                 dbUsername = rs.getString("username");
                 dbPassword = rs.getString("password");
-
+                
                 if (dbUsername.equalsIgnoreCase(username) && dbPassword.equalsIgnoreCase(password)) {
                     login = true;
-                }
-                System.out.println( dbUsername + " " + dbPassword + ":" + "Login successful");
+               
+               query2 = "SELECT firstname,lastname FROM users where username ='"+dbUsername+"'";
+               stmt2.executeQuery(query2);
+               ResultSet r = stmt2.getResultSet();
+                System.out.println("Login successful");
                 HomePage x =  new HomePage();
+                while (r.next()){
+                String firstname = r.getString("firstname");
+                String lastname = r.getString("lastname"); 
+                 x.adminName = firstname +" "+lastname;
+                };
+               
+                x.getLogin().setText(x.adminName);
                 this.dispose();
                 x.setVisible(true);
+                }
+               
             }
         } catch (Exception e) {
             e.printStackTrace();

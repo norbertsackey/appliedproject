@@ -41,7 +41,7 @@ public class DatePicker
                 //create JPanel object and set layout
                 JPanel p1 = new JPanel(new GridLayout(7, 7));
                 //set size
-                p1.setPreferredSize(new Dimension(420,250));
+                p1.setPreferredSize(new Dimension(400,180));
                 //for loop condition
                 for (int x = 0; x < button.length; x++) 
                 {		

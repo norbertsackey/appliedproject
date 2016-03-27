@@ -382,6 +382,7 @@ public class AddStaff extends javax.swing.JFrame {
         File newFile = imgch.getFile();
         x.addImage(newFile,newFile.getAbsolutePath());
         x.addStaff(neo);
+        this.dispose();
         
        
 

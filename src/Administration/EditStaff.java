@@ -401,6 +401,7 @@ public class EditStaff extends javax.swing.JFrame {
         File newFile = imgch.getFile();
         x.updateImage(newFile, newFile.getAbsolutePath(),staffID);
         x.updateStaff(neo,staffID);
+        this.dispose();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 

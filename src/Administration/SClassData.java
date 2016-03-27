@@ -19,7 +19,6 @@ package Administration;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.util.*;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -56,14 +55,13 @@ public class SClassData {
         initialize();
     }
 
-    
     public void addClass(SClass neo) {
         String subject = neo.getSubject();
         String descrip = neo.getDescription();
         int teacherID = neo.getTeacherID();
         int periodID = neo.getPeriodID();
         String classroom = neo.getClassroom();
-        
+
         try {
             String stm = "INSERT INTO classes(subject,descrip,teacherID,periodID,classroom)VALUES(?,?,?,?,?)";
             p = conn.prepareStatement(stm);
@@ -72,7 +70,7 @@ public class SClassData {
             p.setInt(3, teacherID);
             p.setInt(4, periodID);
             p.setString(5, classroom);
-           
+
             p.executeUpdate();
 
             System.out.println("New Class Added");
@@ -81,9 +79,6 @@ public class SClassData {
         }
 
     }
-    
-   
-   
 
     public void updateClass(SClass neo, int id) {
         String subject = neo.getSubject();
@@ -91,16 +86,16 @@ public class SClassData {
         int teacherID = neo.getTeacherID();
         int periodID = neo.getPeriodID();
         String classroom = neo.getClassroom();
-        
+
         try {
-            String stm = "update classes set subject = ?,descrip = ?,teacherID = ?,periodID = ?, classroom = ? where classID="+id+"";
+            String stm = "update classes set subject = ?,descrip = ?,teacherID = ?,periodID = ?, classroom = ? where classID=" + id + "";
             p = conn.prepareStatement(stm);
             p.setString(1, subject);
             p.setString(2, descrip);
             p.setInt(3, teacherID);
             p.setInt(4, periodID);
             p.setString(5, classroom);
-           
+
             p.executeUpdate();
             System.out.println("Class Data Updated");
         } catch (Exception e) {
@@ -155,7 +150,7 @@ public class SClassData {
             String query = "SELECT * FROM classes WHERE subject  like %'" + subject + "'";
             u = s.executeQuery(query);
             if (u.next()) {
-               array.add(Integer.toString(u.getInt("classID")));
+                array.add(Integer.toString(u.getInt("classID")));
                 array.add(u.getString("subject"));
                 array.add(u.getString("descrip"));
                 array.add(Integer.toString(u.getInt("teacherID")));
@@ -173,7 +168,6 @@ public class SClassData {
     }
 
     //This method stores all the needed info about all taxi in a text file
-
     public ResultSet saveToFile() {
         ResultSet u = null;
         ResultSet x = null;
@@ -186,13 +180,12 @@ public class SClassData {
             PrintWriter writer = new PrintWriter(new File("classes.txt"));
 
             while (u.next()) {
-                writer.println(u.getString("classID"));
+                writer.println(Integer.toString(u.getInt("classID")));
                 writer.println(u.getString("subject"));
                 writer.println(u.getString("descrip"));
                 writer.println(Integer.toString(u.getInt("teacherID")));
                 writer.println(Integer.toString(u.getInt("personID")));
-                 writer.println(u.getString("classroom"));
-              
+                writer.println(u.getString("classroom"));
 
             }
 
@@ -221,7 +214,7 @@ public class SClassData {
     }
 
     public static void main(String[] args) {
-        
+
     }
 
 }

@@ -39,21 +39,21 @@ public class RevenueData {
     }
 
     //this method adds a Taxi to the database
-    public void addRevenue(Revenue neo, int i) {
-        int RevenueType = neo.getRevenueType();
+    public void addRevenue(Revenue neo) {
+        String RevenueType = neo.getRevenueType();
         int amount = neo.getAmount();
         String dateRec = neo.getDateRec();
-        int payer = neo.getPayer(i);
+        String payer = neo.getPayer();
        
         String desc = neo.getDesc();
                 
         try {
             String stm = "INSERT INTO Revenues(RevenueType,amount,dateRec,payer,descrip)VALUES(?,?,?,?,?)";
             p = conn.prepareStatement(stm);
-            p.setInt(1, RevenueType);
+            p.setString(1, RevenueType);
             p.setInt(2, amount);
             p.setString(3, dateRec);
-            p.setInt(4, payer);
+            p.setString(4, payer);
             p.setString(5, desc);
             
             p.executeUpdate();
@@ -66,21 +66,21 @@ public class RevenueData {
     }
 
     //this method updates a Student in the database
-    public void updateRevenue(Revenue neo, int i, int id) {
-        int RevenueType = neo.getRevenueType();
+    public void updateRevenue(Revenue neo, int id) {
+        String RevenueType = neo.getRevenueType();
         int amount = neo.getAmount();
         String dateRec = neo.getDateRec();
-        int payer = neo.getPayer(i);
+        String payer = neo.getPayer();
      
         String desc = neo.getDesc();
 
         try {
             String stm = "update Revenues set RevenueType = ?,amount=?,dateRec = ?, payer=?,descrip = ?  where RevenueID=?";
             p = conn.prepareStatement(stm);
-            p.setInt(1, RevenueType);
+            p.setString(1, RevenueType);
             p.setInt(2, amount);
             p.setString(3, dateRec);
-            p.setInt(4, payer);
+            p.setString(4, payer);
             p.setString(5, desc);
             p.setInt(6, id);
             p.executeUpdate();
@@ -115,7 +115,7 @@ public class RevenueData {
                 array.add(u.getString("RevenueType"));
                 array.add(Integer.toString(u.getInt("amount")));
                 array.add(u.getString("dateRec"));
-                array.add(Integer.toString(u.getInt("payer")));
+                array.add(u.getString("payer"));
                 array.add(u.getString("descrip"));
                 
 
@@ -140,7 +140,7 @@ public class RevenueData {
             if (u.next()) {
                 array.add(Integer.toString(u.getInt("RevenueID")));
                 array.add(u.getString("RevenueType"));
-                array.add(u.getString("amount"));
+                 array.add(Integer.toString(u.getInt("amount")));
                 array.add(u.getString("dateofExp"));
                 array.add(u.getString("payer"));
                 array.add(u.getString("descrip"));
@@ -172,7 +172,7 @@ public class RevenueData {
                 writer.println(u.getString("RevenueType"));
                 writer.println(Integer.toString(u.getInt("amount")));
                 writer.println(u.getString("dateRec"));
-               writer.println(Integer.toString(u.getInt("payer")));
+                writer.println(u.getString("payer"));
                 writer.println(u.getString("descrip"));
 
             }
